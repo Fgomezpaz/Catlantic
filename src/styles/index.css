@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --shell-x: clamp(1.25rem, 4vw, 5rem);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-fluid-base text-muted antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :lang(zh-CN) .display,
+  :lang(zh-CN) .eyebrow {
+    letter-spacing: 0.02em;
+  }
+
+  ::selection {
+    @apply bg-clay/30 text-paper;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-clay ring-offset-2 ring-offset-ink-950;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-950;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-600;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-clay-deep;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: theme('maxWidth.shell');
+    margin-inline: auto;
+    padding-inline: var(--shell-x);
+  }
+
+  .rule {
+    @apply border-line;
+  }
+
+  .eyebrow {
+    @apply font-mono text-fluid-xs uppercase tracking-widest text-faint;
+  }
+
+  .display {
+    @apply font-display font-semibold tracking-tightest text-paper;
+  }
+
+  .hairline-grid {
+    background-image:
+      linear-gradient(to right, rgba(250, 249, 245, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250, 249, 245, 0.045) 1px, transparent 1px);
+    background-size: 88px 88px;
+  }
+
+  .glass-panel {
+    @apply border border-line bg-ink-900/70 backdrop-blur-xl;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+}
