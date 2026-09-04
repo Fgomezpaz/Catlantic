@@ -31,7 +31,7 @@ export function Partners() {
             <motion.article key={cat.id} variants={staggerItem} className="flex min-h-[16rem] flex-col bg-ink-950 p-7 transition-colors hover:bg-ink-900">
               <div className="flex items-start justify-between">
                 <h3 className="text-fluid-base font-medium text-paper">{tx(cat.title)}</h3>
-                <span className="display text-fluid-xl text-clay">{cat.count}</span>
+                <span className="display text-fluid-xl text-atlantic">{cat.count}</span>
               </div>
               <p className="mt-4 text-pretty text-fluid-sm text-muted">{tx(cat.body)}</p>
               <p className="mt-auto pt-6 font-mono text-fluid-xs text-faint">
@@ -52,7 +52,7 @@ export function Partners() {
           </ul>
         </Reveal>
 
-        <div id="independent" className="mt-24 grid gap-10 rounded-3xl border border-clay/25 bg-[radial-gradient(ellipse_70%_100%_at_100%_0%,rgba(217,119,87,0.14),transparent_60%)] p-8 lg:grid-cols-12 lg:p-14">
+        <div id="independent" className="mt-24 grid gap-10 rounded-3xl border border-atlantic/25 bg-[radial-gradient(ellipse_70%_100%_at_100%_0%,rgb(var(--c-atlantic)/0.14),transparent_60%)] p-8 lg:grid-cols-12 lg:p-14">
           <Reveal className="lg:col-span-6">
             <p className="eyebrow mb-5">{t('solo.eyebrow')}</p>
             <h3 className="display text-fluid-2xl">
@@ -71,7 +71,7 @@ export function Partners() {
             <ul className="grid gap-3">
               {soloTraderPoints.map((p) => (
                 <li key={p.en} className="flex items-start gap-3 rounded-xl border border-line bg-ink-950/70 p-4 text-fluid-sm text-paper/85">
-                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-clay/40 text-clay">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-atlantic/40 text-atlantic">
                     <Check width={12} height={12} />
                   </span>
                   {tx(p)}

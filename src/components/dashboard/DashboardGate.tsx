@@ -39,7 +39,7 @@ export function DashboardGate({ onAuthenticated }: DashboardGateProps) {
   return (
     <div className="relative grid min-h-screen place-items-center overflow-hidden bg-ink-950 px-5 py-20">
       <div className="hairline-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000,transparent)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[50vh] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgba(217,119,87,0.14),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[50vh] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgb(var(--c-atlantic)/0.14),transparent_70%)]" />
       <div className="absolute right-5 top-5">
         <LanguageSwitcher />
       </div>
@@ -56,11 +56,11 @@ export function DashboardGate({ onAuthenticated }: DashboardGateProps) {
         <form onSubmit={submit} className="mt-10 space-y-5" noValidate>
           <label className="block">
             <span className="eyebrow">{t('acc.email')}</span>
-            <input type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-clay" placeholder="you@company.com" required />
+            <input type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-atlantic" placeholder="you@company.com" required />
           </label>
           <label className="block">
             <span className="eyebrow">{t('acc.password')}</span>
-            <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-clay" placeholder="••••••••••••" required />
+            <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-atlantic" placeholder="••••••••••••" required />
           </label>
 
           <AnimatePresence>
@@ -87,7 +87,7 @@ export function DashboardGate({ onAuthenticated }: DashboardGateProps) {
         </div>
 
         <p className="mt-6 text-fluid-xs">
-          <Link to="/access" className="text-clay hover:text-clay-soft">
+          <Link to="/access" className="text-atlantic hover:text-atlantic-soft">
             {t('dash.gate.gateway')} →
           </Link>
         </p>

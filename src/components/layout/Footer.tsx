@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { LogoMark } from '../icons/Logo';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { ThemeControl } from '../ui/ThemeToggle';
 import { company, navigation } from '../../data/site';
 import { useI18n } from '../../i18n/useI18n';
 import type { MessageKey } from '../../i18n/messages';
@@ -24,11 +25,14 @@ export function Footer() {
           </div>
           <p className="mt-8 max-w-sm text-pretty text-fluid-sm text-muted">{t('foot.about', { company: company.name })}</p>
           <p className="mt-6 max-w-sm font-mono text-fluid-xs text-faint">{t('foot.disclaimer')}</p>
-          <LanguageSwitcher className="mt-8" align="left" />
+          <div className="mt-8 flex flex-wrap items-end gap-x-10 gap-y-6">
+            <LanguageSwitcher align="left" />
+            <ThemeControl />
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-10 lg:col-span-7 lg:grid-cols-3">
-          <div>
+        <div className="grid min-w-0 grid-cols-1 gap-10 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-[1.1fr_1.3fr_0.9fr]">
+          <div className="min-w-0">
             <h3 className="eyebrow mb-6">{t('foot.office')}</h3>
             <address className="not-italic text-fluid-sm leading-relaxed text-paper/80">
               {company.name}
@@ -38,40 +42,38 @@ export function Footer() {
               {company.address.city}, {company.address.region} {company.address.postal}
               <br />
               {company.address.country}
-              <br />
-              <span className="font-mono text-fluid-xs text-muted">{company.phone}</span>
             </address>
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="eyebrow mb-6">{t('foot.contact')}</h3>
-            <ul className="space-y-3 text-fluid-sm">
+            <ul className="space-y-4 text-fluid-sm">
               {(Object.keys(company.emails) as Array<keyof typeof company.emails>).map((key) => (
-                <li key={key}>
-                  <a href={`mailto:${company.emails[key]}`} className="text-paper/80 transition-colors hover:text-clay">
+                <li key={key} className="flex min-w-0 flex-col gap-0.5">
+                  <span className="font-mono text-[0.66rem] uppercase tracking-wider text-faint">{t(`email.${key}` as MessageKey)}</span>
+                  <a href={`mailto:${company.emails[key]}`} className="break-all text-paper/80 transition-colors hover:text-atlantic">
                     {company.emails[key]}
                   </a>
-                  <span className="ml-2 font-mono text-fluid-xs uppercase tracking-wider text-faint">{t(`email.${key}` as MessageKey)}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="eyebrow mb-6">{t('foot.navigate')}</h3>
             <ul className="space-y-3 text-fluid-sm">
               {navigation.map((item) => (
                 <li key={item.id}>
-                  <a href={item.href} className="text-paper/80 transition-colors hover:text-clay">
+                  <a href={item.href} className="text-paper/80 transition-colors hover:text-atlantic">
                     {t(item.labelKey)}
                   </a>
                 </li>
               ))}
               <li>
-                <Link to="/access" className="text-paper/80 transition-colors hover:text-clay">
+                <Link to="/access" className="text-paper/80 transition-colors hover:text-atlantic">
                   {t('nav.access')}
                 </Link>
               </li>
               <li>
-                <Link to="/api" className="text-paper/80 transition-colors hover:text-clay">
+                <Link to="/api" className="text-paper/80 transition-colors hover:text-atlantic">
                   {t('foot.api')}
                 </Link>
               </li>

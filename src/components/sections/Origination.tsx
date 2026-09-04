@@ -70,7 +70,7 @@ export function Origination() {
                 >
                   <div className="flex items-start justify-between">
                     <span className="eyebrow">{t(familyKey[item.family])}</span>
-                    <Glyph className="h-11 w-11 text-clay transition-transform duration-700 ease-swift group-hover:-rotate-6 group-hover:scale-110" />
+                    <Glyph className="h-11 w-11 text-atlantic transition-transform duration-700 ease-swift group-hover:-rotate-6 group-hover:scale-110" />
                   </div>
                   <h3 className="display mt-8 text-fluid-xl">{tx(item.name)}</h3>
                   <p className="mt-3 text-pretty text-fluid-sm text-muted">{tx(item.note)}</p>
@@ -84,7 +84,7 @@ export function Origination() {
                       <dd className="text-paper/80">{tx(item.packing)}</dd>
                     </dl>
                   </div>
-                  <span className="pointer-events-none absolute inset-x-7 bottom-0 h-px scale-x-0 bg-clay transition-transform duration-500 ease-swift group-hover:scale-x-100" />
+                  <span className="pointer-events-none absolute inset-x-7 bottom-0 h-px scale-x-0 bg-atlantic transition-transform duration-500 ease-swift group-hover:scale-x-100" />
                 </motion.article>
               );
             })}

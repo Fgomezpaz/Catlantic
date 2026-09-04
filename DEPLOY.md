@@ -64,7 +64,8 @@ Todo el texto y los datos están en `src/data/`:
 | Certificaciones y proceso | `src/data/compliance.ts` |
 | Equipo (nombres, cargos, emails) | `src/data/team.ts` |
 | Datos del dashboard demo | `src/data/dashboard.ts` |
-| Colores y tipografía | `tailwind.config.ts` |
+| Colores y tipografía | `tailwind.config.ts` (nombres) y `src/styles/index.css` (valores de cada tema) |
+| Horario del modo claro/oscuro automático | `src/theme/types.ts` (`DAYLIGHT`) y el script inline de `index.html` |
 
 Después de editar: `git add . && git commit -m "Actualizo X" && git push`. GitHub republica solo.
 
@@ -73,6 +74,8 @@ Después de editar: `git add . && git commit -m "Actualizo X" && git push`. GitH
 - **Cotizaciones y fletes** se mueven cada ~20 s con una deriva determinística (`src/lib/simulation.ts`).
   No hay API: dos visitantes en el mismo minuto ven lo mismo. El pie de página aclara que son niveles indicativos.
 - **Reloj UTC**, contadores animados y el feed del hero corren en el navegador.
+- **Modo claro / oscuro**: automático según la hora local del visitante (claro 07:00–19:00), con botón manual
+  en la barra y control Auto · Claro · Oscuro en el pie. La elección se guarda en el navegador.
 - **Dashboard**: acceso demo con `demo@catlanticpartners.com / catlantic-2026`. Cualquier otro usuario ve
   "Access denied". Para clientes reales hay que conectar un proveedor de autenticación (Auth0, Clerk, Supabase).
 

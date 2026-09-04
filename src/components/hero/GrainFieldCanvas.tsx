@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useTheme } from '../../theme/useTheme';
 
 const vertexShader = /* glsl */ `
   varying vec2 vUv;
@@ -15,7 +16,8 @@ const vertexShader = /* glsl */ `
  * Wind over a grain field, seen from above at dusk.
  * Layered simplex-style noise is advected along a slow flow field; ridges are
  * lit from the upper-left so the surface reads as rows of standing crop rather
- * than abstract smoke. Palette is the brand: ink, clay, wheat, paper.
+ * than abstract smoke. Palette is the brand: ink, Atlantic blue, celeste, paper.
+ * uLight cross-fades to the daylight palette (paper field, blue shadows).
  */
 const fragmentShader = /* glsl */ `
   precision highp float;
@@ -24,6 +26,7 @@ const fragmentShader = /* glsl */ `
   uniform vec2  uResolution;
   uniform vec2  uPointer;
   uniform float uMotion;
+  uniform float uLight;
 
   varying vec2 vUv;
 
@@ -91,28 +94,41 @@ const fragmentShader = /* glsl */ `
     float diffuse = clamp(dot(normal, lightDir), 0.0, 1.0);
     float rim = pow(1.0 - clamp(normal.z, 0.0, 1.0), 2.0);
 
-    vec3 ink   = vec3(0.043, 0.039, 0.035);
-    vec3 soil  = vec3(0.16, 0.12, 0.09);
-    vec3 clay  = vec3(0.851, 0.467, 0.341);
-    vec3 wheat = vec3(0.788, 0.663, 0.380);
+    // Night palette: ink ground, cool soil, Atlantic ridges, celeste rim.
+    vec3 inkN   = vec3(0.043, 0.039, 0.035);
+    vec3 soilN  = vec3(0.10, 0.11, 0.13);
+    vec3 ridgeN = vec3(0.353, 0.608, 0.847);
+    vec3 rimN   = vec3(0.561, 0.765, 0.910);
+    // Day palette: paper ground, warm-grey soil, deep Atlantic ridges, blue rim.
+    vec3 inkD   = vec3(0.980, 0.976, 0.960);
+    vec3 soilD  = vec3(0.905, 0.895, 0.870);
+    vec3 ridgeD = vec3(0.184, 0.427, 0.682);
+    vec3 rimD   = vec3(0.353, 0.608, 0.847);
+
+    vec3 ink   = mix(inkN, inkD, uLight);
+    vec3 soil  = mix(soilN, soilD, uLight);
+    vec3 ridge = mix(ridgeN, ridgeD, uLight);
+    vec3 rim3  = mix(rimN, rimD, uLight);
     vec3 paper = vec3(0.98, 0.976, 0.96);
 
     float height = smoothstep(-0.55, 0.75, h);
     vec3 color = mix(ink, soil, height);
-    color = mix(color, clay * 0.85, smoothstep(0.35, 0.95, height) * diffuse * 0.9);
-    color += wheat * rim * 0.28 * smoothstep(0.4, 1.0, height);
-    color += paper * pow(diffuse, 8.0) * 0.06;
+    float ridgeMix = smoothstep(0.35, 0.95, height) * diffuse * mix(0.9, 0.55, uLight);
+    color = mix(color, ridge * mix(0.85, 1.0, uLight), ridgeMix);
+    color += rim3 * rim * mix(0.28, 0.18, uLight) * smoothstep(0.4, 1.0, height);
+    color += paper * pow(diffuse, 8.0) * 0.06 * (1.0 - uLight);
+    color = mix(color, color - rim3 * rim * 0.12, uLight);
 
     // horizon haze toward the top and a floor of ink at the bottom edge
     float haze = smoothstep(0.45, 1.05, uv.y);
-    color = mix(color, ink * 1.4, haze * 0.85);
+    color = mix(color, mix(ink * 1.4, ink, uLight), haze * 0.85);
     color = mix(color, ink, smoothstep(0.18, 0.0, uv.y));
 
-    // vignette + film grain
+    // vignette + film grain (both softer in daylight)
     float vig = smoothstep(1.35, 0.35, length((uv - 0.5) * vec2(1.2, 1.0)));
-    color *= mix(0.55, 1.0, vig);
+    color *= mix(mix(0.55, 1.0, vig), mix(0.90, 1.0, vig), uLight);
     float grain = fract(sin(dot(gl_FragCoord.xy + t * 60.0, vec2(12.9898, 78.233))) * 43758.5453);
-    color += (grain - 0.5) * 0.035;
+    color += (grain - 0.5) * mix(0.035, 0.02, uLight);
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -123,9 +139,10 @@ interface FieldUniforms {
   uResolution: { value: THREE.Vector2 };
   uPointer: { value: THREE.Vector2 };
   uMotion: { value: number };
+  uLight: { value: number };
 }
 
-function FieldPlane({ motion }: { motion: number }) {
+function FieldPlane({ motion, light }: { motion: number; light: number }) {
   const material = useRef<THREE.ShaderMaterial>(null);
   const { size, gl } = useThree();
   const pointer = useRef(new THREE.Vector2(0.5, 0.5));
@@ -137,6 +154,7 @@ function FieldPlane({ motion }: { motion: number }) {
       uResolution: { value: new THREE.Vector2(1, 1) },
       uPointer: { value: new THREE.Vector2(0.5, 0.5) },
       uMotion: { value: motion },
+      uLight: { value: light },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -145,6 +163,12 @@ function FieldPlane({ motion }: { motion: number }) {
   useEffect(() => {
     uniforms.uMotion.value = motion;
   }, [motion, uniforms]);
+
+  // Ease between palettes rather than snapping when the theme changes.
+  const lightTarget = useRef(light);
+  useEffect(() => {
+    lightTarget.current = light;
+  }, [light]);
 
   useEffect(() => {
     const canvas = gl.domElement;
@@ -163,6 +187,8 @@ function FieldPlane({ motion }: { motion: number }) {
     if (!material.current) return;
     const u = material.current.uniforms as unknown as FieldUniforms;
     u.uTime.value += delta;
+    u.uLight.value += (lightTarget.current - u.uLight.value) * Math.min(1, delta * 4);
+    if (Math.abs(lightTarget.current - u.uLight.value) < 0.002) u.uLight.value = lightTarget.current;
     u.uResolution.value.set(size.width, size.height);
     pointer.current.lerp(target.current, 0.04);
     u.uPointer.value.copy(pointer.current);
@@ -183,12 +209,28 @@ function FieldPlane({ motion }: { motion: number }) {
   );
 }
 
+/** With frameloop="demand", request a burst of frames so the palette cross-fade still plays. */
+function FrameOnThemeChange({ theme }: { theme: string }) {
+  const { invalidate } = useThree();
+  useEffect(() => {
+    let n = 0;
+    const id = window.setInterval(() => {
+      invalidate();
+      if ((n += 1) > 40) window.clearInterval(id);
+    }, 16);
+    return () => window.clearInterval(id);
+  }, [theme, invalidate]);
+  return null;
+}
+
 interface GrainFieldCanvasProps {
   className?: string;
 }
 
 export function GrainFieldCanvas({ className }: GrainFieldCanvasProps) {
   const reduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
+  const light = theme === 'light' ? 1 : 0;
 
   return (
     <div className={className} aria-hidden="true">
@@ -199,7 +241,8 @@ export function GrainFieldCanvas({ className }: GrainFieldCanvasProps) {
         camera={{ position: [0, 0, 1] }}
         style={{ width: '100%', height: '100%' }}
       >
-        <FieldPlane motion={reduced ? 0 : 1} />
+        <FieldPlane motion={reduced ? 0 : 1} light={light} />
+        {reduced && <FrameOnThemeChange theme={theme} />}
       </Canvas>
     </div>
   );

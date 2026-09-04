@@ -7,7 +7,7 @@ The ring is the world market; the kernel is what Catlantic originates; the point
 cargo leaving South America. It works at 14 px (favicon) and at any size above.
 
 - Ring: paper `#FAF9F5` on dark, ink `#0B0A09` on light. Stroke 2 (thicker at small sizes).
-- Kernel and point: clay `#D97757`, never recoloured.
+- Kernel and point: Atlantic blue `#5A9BD8`, never recoloured (in the light theme of the site the UI token deepens to `#2F6DAE`; artwork always uses `#5A9BD8`).
 - Kernel tilt: −22°. Do not rotate or mirror the mark.
 - Clear space: half the ring diameter on every side.
 
@@ -33,20 +33,25 @@ to a printer if the fonts are not installed.
 
 ## Palette
 
-| Token | Hex | Role |
-|---|---|---|
-| ink-950 | `#0B0A09` | Page background |
-| ink-900 | `#100F0C` | Section alternation |
-| ink-850 | `#17150F` | Chart surface |
-| ink-800 | `#1D1B16` | Raised surfaces |
-| paper | `#FAF9F5` | Primary text, ring |
-| muted | `#A9A296` | Secondary text |
-| faint | `#6F6960` | Captions, eyebrows |
-| clay | `#D97757` | Accent — kernel, highlights, active states |
-| clay-soft | `#E8A088` | Hover on clay |
-| wheat | `#C9A961` | Secondary accent, used sparingly |
+The site has two themes. Every token is a CSS variable (`src/styles/index.css`); the same utility
+classes render both. "Auto" follows the visitor's clock (light 07:00–19:00, dark at night) and a
+manual switch pins either theme.
 
-Chart series (validated for colour-vision deficiency on `#17150F`): `#3987E5`, `#D95926`, `#199E70`.
+| Token | Dark theme | Light theme | Role |
+|---|---|---|---|
+| ink-950 | `#0B0A09` | `#FAF9F5` | Page background |
+| ink-900 | `#100F0C` | `#F4F2EC` | Section alternation |
+| ink-850 | `#17150F` | `#EEEBE3` | Chart surface |
+| ink-800 | `#1D1B16` | `#E6E2D8` | Raised surfaces |
+| paper | `#FAF9F5` | `#0B0A09` | Primary text, ring |
+| muted | `#A9A296` | `#5B564D` | Secondary text |
+| faint | `#6F6960` | `#7A7367` | Captions, eyebrows |
+| atlantic | `#5A9BD8` | `#2F6DAE` | Accent — kernel, highlights, active states |
+| atlantic-soft | `#8FC3E8` | `#5A9BD8` | Hover on accent, live indicators |
+| atlantic-deep | `#3B6FA6` | `#1F4F82` | Pressed states, scrollbar hover |
+| slate | `#8FA8B8` | `#5C7A8F` | Secondary accent, used sparingly |
+
+Chart series (validated for colour-vision deficiency on both surfaces): `#3987E5`, `#D95926`, `#199E70`.
 Status: good `#3FB27F`, warn `#D9A441`, serious `#DC7633`, critical `#E05C5C` — always with an icon and label.
 
 ## Type

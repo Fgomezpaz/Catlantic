@@ -33,7 +33,7 @@ export function Compliance() {
             <motion.article key={cert.id} variants={staggerItem} className="relative bg-ink-950 p-8 lg:p-10">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-fluid-xs text-faint">0{i + 1}</span>
-                <span className="grid h-9 w-9 place-items-center rounded-full border border-clay/40 text-clay">
+                <span className="grid h-9 w-9 place-items-center rounded-full border border-atlantic/40 text-atlantic">
                   <Check width={16} height={16} />
                 </span>
               </div>
@@ -67,7 +67,7 @@ export function Compliance() {
           {[...certifications, ...certifications].map((cert, i) => (
             <span key={`${cert.id}-${i}`} className="mx-8 flex items-center gap-4 whitespace-nowrap">
               <span className="display text-fluid-lg">{tx(cert.label)}</span>
-              <span className="h-1 w-1 rounded-full bg-clay" />
+              <span className="h-1 w-1 rounded-full bg-atlantic" />
             </span>
           ))}
         </Marquee>

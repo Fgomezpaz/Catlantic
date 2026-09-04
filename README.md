@@ -124,7 +124,20 @@ never hard-code copy, except section headlines. To change:
 - **Quotes** → `data/market.ts` (`price` is the base level, `volatility` the drift amplitude)
 - **Lanes on the globe** → `data/lanes.ts` (lat/lon in decimal degrees)
 - **Team** → `data/team.ts` — the shipped profiles are placeholders
-- **Brand colours / type scale** → `tailwind.config.ts`
+- **Brand colours / type scale** → `tailwind.config.ts` (utility names) and `src/styles/index.css` (the RGB values for each theme)
+
+## Themes (dark / light)
+
+The site ships both themes. **Auto** (default) follows the visitor's local clock — light from
+07:00 to 19:00, dark at night — and re-checks every minute, so a tab left open changes with the day.
+The sun/moon button in the navbar pins the opposite theme; the *Appearance* control in the footer
+offers Auto · Light · Dark. The choice is stored in `localStorage` (`catlantic.theme`) and an inline
+script in `index.html` applies it before the first paint, so there is no flash.
+
+Implementation: every colour token is a CSS variable on `:root` / `:root[data-theme="light"]`
+(`src/styles/index.css`), consumed by Tailwind through `rgb(var(--c-…) / <alpha-value>)`.
+The WebGL hero cross-fades between palettes with a `uLight` uniform; the globe swaps its palette;
+charts use `fill-*` / `stroke-*` utilities. Provider and hook: `src/theme/`.
 
 ## Deploying
 
@@ -136,5 +149,5 @@ See [DEPLOY.md](./DEPLOY.md) for the GitHub Pages walkthrough. The workflow in
 - Every animation respects `prefers-reduced-motion` (WebGL renders a single frame, GSAP is skipped,
   the Process section stacks vertically).
 - Charts ship a table view, a legend, direct labels and a hover tooltip; the series palette was
-  validated for colour-vision deficiency on the dark surface.
+  validated for colour-vision deficiency on both the dark and the light surface.
 - Status pills carry an icon + label, never colour alone.

@@ -100,7 +100,7 @@ export function Process() {
         </div>
         <div className="hidden w-48 lg:block">
           <div className="h-px w-full bg-line">
-            <div ref={progress} className="h-px w-full origin-left bg-clay" style={{ transform: 'scaleX(0)' }} />
+            <div ref={progress} className="h-px w-full origin-left bg-atlantic" style={{ transform: 'scaleX(0)' }} />
           </div>
         </div>
       </div>
@@ -125,7 +125,7 @@ export function Process() {
               <ul data-panel-copy className="mt-10 space-y-3">
                 {stage.markers.map((m) => (
                   <li key={m.en} className="flex items-center gap-3 text-fluid-sm text-paper/80">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-clay" />
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-atlantic" />
                     {tx(m)}
                   </li>
                 ))}

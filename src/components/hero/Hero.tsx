@@ -53,7 +53,7 @@ export function Hero() {
         <motion.div style={{ y: copyY, opacity: copyOpacity }} className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
             <p data-hero-fade className="eyebrow mb-8 flex items-center gap-3">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-clay" />
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-atlantic" />
               {t('hero.eyebrow')}
             </p>
             <h1 key={locale} className="display text-fluid-3xl" style={{ perspective: '900px' }}>
@@ -63,7 +63,7 @@ export function Hero() {
                     ref={(el) => {
                       if (el) words.current[i] = el;
                     }}
-                    className={accentIndex.has(i) ? 'inline-block text-clay' : 'inline-block'}
+                    className={accentIndex.has(i) ? 'inline-block text-atlantic' : 'inline-block'}
                     style={{ transformOrigin: '0% 100%' }}
                   >
                     {t(key)}

@@ -41,7 +41,7 @@ export function LanguageSwitcher({ className, align = 'right' }: LanguageSwitche
         onClick={() => setOpen((v) => !v)}
         className="flex h-10 items-center gap-2 rounded-full border border-line px-3 font-mono text-fluid-xs text-paper transition-colors hover:border-paper/40"
       >
-        <Globe width={15} height={15} className="text-clay" />
+        <Globe width={15} height={15} className="text-atlantic" />
         {localeMeta[locale].short}
       </button>
       <AnimatePresence>

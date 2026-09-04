@@ -3,11 +3,33 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { TradeLane } from '../../types';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useTheme } from '../../theme/useTheme';
+import type { Theme } from '../../theme/types';
 
 const RADIUS = 1;
-const CLAY = new THREE.Color('#D97757');
-const PAPER = new THREE.Color('#FAF9F5');
-const FAINT = new THREE.Color('#4A453D');
+
+interface Palette {
+  accent: THREE.Color;
+  fg: THREE.Color;
+  faint: THREE.Color;
+  occluder: THREE.Color;
+}
+
+/** Scene colours per theme — mirrors the CSS tokens in src/styles/index.css. */
+const PALETTES: Record<Theme, Palette> = {
+  dark: {
+    accent: new THREE.Color('#5A9BD8'),
+    fg: new THREE.Color('#FAF9F5'),
+    faint: new THREE.Color('#4A453D'),
+    occluder: new THREE.Color('#0B0A09'),
+  },
+  light: {
+    accent: new THREE.Color('#2F6DAE'),
+    fg: new THREE.Color('#0B0A09'),
+    faint: new THREE.Color('#CFC9BC'),
+    occluder: new THREE.Color('#FAF9F5'),
+  },
+};
 
 function toVector(lat: number, lon: number, radius = RADIUS): THREE.Vector3 {
   const phi = THREE.MathUtils.degToRad(90 - lat);
@@ -27,7 +49,7 @@ function arcCurve(from: THREE.Vector3, to: THREE.Vector3): THREE.QuadraticBezier
   return new THREE.QuadraticBezierCurve3(from, mid, to);
 }
 
-function DotSphere() {
+function DotSphere({ palette }: { palette: Palette }) {
   const geometry = useMemo(() => {
     const count = 2400;
     const positions = new Float32Array(count * 3);
@@ -49,7 +71,7 @@ function DotSphere() {
 
   return (
     <points geometry={geometry}>
-      <pointsMaterial size={0.012} color={FAINT} sizeAttenuation transparent opacity={0.9} depthWrite={false} />
+      <pointsMaterial size={0.012} color={palette.faint} sizeAttenuation transparent opacity={0.9} depthWrite={false} />
     </points>
   );
 }
@@ -58,9 +80,10 @@ interface LaneArcProps {
   lane: TradeLane;
   active: boolean;
   motion: number;
+  palette: Palette;
 }
 
-function LaneArc({ lane, active, motion }: LaneArcProps) {
+function LaneArc({ lane, active, motion, palette }: LaneArcProps) {
   const curve = useMemo(
     () => arcCurve(toVector(lane.from.lat, lane.from.lon), toVector(lane.to.lat, lane.to.lon)),
     [lane],
@@ -72,7 +95,7 @@ function LaneArc({ lane, active, motion }: LaneArcProps) {
     const colors = new Float32Array(points.length * 3);
     for (let i = 0; i < points.length; i += 1) {
       const t = i / (points.length - 1);
-      const c = FAINT.clone().lerp(CLAY, Math.sin(t * Math.PI));
+      const c = palette.faint.clone().lerp(palette.accent, Math.sin(t * Math.PI));
       colors[i * 3] = c.r;
       colors[i * 3 + 1] = c.g;
       colors[i * 3 + 2] = c.b;
@@ -80,7 +103,7 @@ function LaneArc({ lane, active, motion }: LaneArcProps) {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     const material = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.35 });
     return new THREE.Line(geometry, material);
-  }, [curve]);
+  }, [curve, palette]);
 
   useEffect(
     () => () => {
@@ -113,12 +136,12 @@ function LaneArc({ lane, active, motion }: LaneArcProps) {
       <primitive object={line} />
       <mesh ref={pulse}>
         <sphereGeometry args={[0.011, 10, 10]} />
-        <meshBasicMaterial color={active ? PAPER : CLAY} />
+        <meshBasicMaterial color={active ? palette.fg : palette.accent} />
       </mesh>
       {endpoints.map((p, i) => (
         <mesh key={i} position={p}>
           <sphereGeometry args={[i === 0 ? 0.014 : 0.018, 12, 12]} />
-          <meshBasicMaterial color={active ? CLAY : FAINT} />
+          <meshBasicMaterial color={active ? palette.accent : palette.faint} />
         </mesh>
       ))}
     </group>
@@ -129,9 +152,10 @@ interface SceneProps {
   lanes: TradeLane[];
   activeId: string | null;
   motion: number;
+  palette: Palette;
 }
 
-function Scene({ lanes, activeId, motion }: SceneProps) {
+function Scene({ lanes, activeId, motion, palette }: SceneProps) {
   const group = useRef<THREE.Group>(null);
   const drag = useRef({ active: false, lastX: 0, velocity: 0 });
 
@@ -173,13 +197,13 @@ function Scene({ lanes, activeId, motion }: SceneProps) {
 
   return (
     <group ref={group} rotation={[0.28, -1.15, 0]}>
-      <DotSphere />
+      <DotSphere palette={palette} />
       <mesh>
         <sphereGeometry args={[RADIUS * 0.985, 48, 48]} />
-        <meshBasicMaterial color="#0B0A09" />
+        <meshBasicMaterial color={palette.occluder} />
       </mesh>
       {lanes.map((lane) => (
-        <LaneArc key={lane.id} lane={lane} active={activeId === null || activeId === lane.id} motion={motion} />
+        <LaneArc key={lane.id} lane={lane} active={activeId === null || activeId === lane.id} motion={motion} palette={palette} />
       ))}
     </group>
   );
@@ -193,6 +217,8 @@ interface GlobeCanvasProps {
 
 export function GlobeCanvas({ lanes, activeId, className }: GlobeCanvasProps) {
   const reduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
+  const palette = PALETTES[theme];
   return (
     <div className={className} aria-hidden="true" style={{ cursor: 'grab', touchAction: 'pan-y' }}>
       <Canvas
@@ -202,7 +228,7 @@ export function GlobeCanvas({ lanes, activeId, className }: GlobeCanvasProps) {
         frameloop={reduced ? 'demand' : 'always'}
         style={{ width: '100%', height: '100%' }}
       >
-        <Scene lanes={lanes} activeId={activeId} motion={reduced ? 0 : 1} />
+        <Scene lanes={lanes} activeId={activeId} motion={reduced ? 0 : 1} palette={palette} />
       </Canvas>
     </div>
   );

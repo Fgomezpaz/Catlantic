@@ -3,9 +3,59 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* ---- Theme tokens (RGB triplets so Tailwind opacity modifiers work) ---- */
+  :root,
+  :root[data-theme='dark'] {
     color-scheme: dark;
     --shell-x: clamp(1.25rem, 4vw, 5rem);
+
+    --c-ink-950: 11 10 9;
+    --c-ink-900: 16 15 12;
+    --c-ink-850: 23 21 15;
+    --c-ink-800: 29 27 22;
+    --c-ink-700: 38 35 28;
+    --c-ink-600: 51 47 38;
+    --c-paper: 250 249 245;
+    --c-muted: 169 162 150;
+    --c-faint: 111 105 96;
+
+    --c-atlantic: 90 155 216; /* #5A9BD8 */
+    --c-atlantic-soft: 143 195 232; /* #8FC3E8 */
+    --c-atlantic-deep: 59 111 166; /* #3B6FA6 */
+    --c-slate: 143 168 184; /* #8FA8B8 */
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+
+    /* The surface scale flips: ink-950 becomes the paper page, paper becomes ink. */
+    --c-ink-950: 250 249 245;
+    --c-ink-900: 244 242 236;
+    --c-ink-850: 238 235 227;
+    --c-ink-800: 230 226 216;
+    --c-ink-700: 217 212 200;
+    --c-ink-600: 198 192 178;
+    --c-paper: 11 10 9;
+    --c-muted: 91 86 77;
+    --c-faint: 122 115 103;
+
+    /* Deeper accent steps so blue text keeps AA contrast on light paper. */
+    --c-atlantic: 47 109 174; /* #2F6DAE */
+    --c-atlantic-soft: 90 155 216; /* #5A9BD8 */
+    --c-atlantic-deep: 31 79 130; /* #1F4F82 */
+    --c-slate: 92 122 143; /* #5C7A8F */
+  }
+
+  html {
+    background-color: rgb(var(--c-ink-950));
+  }
+
+  html.theme-transition,
+  html.theme-transition * {
+    transition:
+      background-color 0.45s ease,
+      border-color 0.45s ease,
+      color 0.45s ease !important;
   }
 
   * {
@@ -32,11 +82,11 @@
   }
 
   ::selection {
-    @apply bg-clay/30 text-paper;
+    @apply bg-atlantic/30 text-paper;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-clay ring-offset-2 ring-offset-ink-950;
+    @apply outline-none ring-2 ring-atlantic ring-offset-2 ring-offset-ink-950;
   }
 
   ::-webkit-scrollbar {
@@ -50,7 +100,7 @@
     @apply rounded-full bg-ink-600;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-clay-deep;
+    @apply bg-atlantic-deep;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -89,8 +139,8 @@
 
   .hairline-grid {
     background-image:
-      linear-gradient(to right, rgba(250, 249, 245, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(250, 249, 245, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgb(var(--c-paper) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-paper) / 0.045) 1px, transparent 1px);
     background-size: 88px 88px;
   }
 

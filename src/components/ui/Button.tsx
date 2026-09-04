@@ -36,7 +36,7 @@ export type ButtonProps = ButtonAsButton | ButtonAsAnchor | ButtonAsLink;
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-paper text-ink-950 hover:bg-clay hover:text-paper border border-transparent',
+    'bg-paper text-ink-950 hover:bg-atlantic hover:text-paper border border-transparent',
   ghost: 'bg-transparent text-paper hover:bg-paper/[0.06] border border-transparent',
   outline: 'bg-transparent text-paper border border-line-strong hover:border-paper/60 hover:bg-paper/[0.04]',
 };

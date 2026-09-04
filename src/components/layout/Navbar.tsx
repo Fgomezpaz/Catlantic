@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { LogoLockup } from '../icons/Logo';
 import { Button } from '../ui/Button';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { ThemeToggle } from '../ui/ThemeToggle';
 import { Close, Lock, Menu } from '../icons/UiIcons';
 import { navigation } from '../../data/site';
 import { useI18n } from '../../i18n/useI18n';
@@ -26,9 +27,11 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <motion.div
-        className="shell flex h-[4.5rem] items-center justify-between"
-        animate={{ backgroundColor: scrolled ? 'rgba(11,10,9,0.72)' : 'rgba(11,10,9,0)' }}
+      <div
+        className={cn(
+          'shell flex h-[4.5rem] items-center justify-between transition-[background-color] duration-500',
+          scrolled ? 'bg-ink-950/75' : 'bg-transparent',
+        )}
         style={{ backdropFilter: scrolled ? 'blur(18px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(18px)' : 'none' }}
       >
         <Link to="/" aria-label="Catlantic" className="relative z-10">
@@ -43,12 +46,13 @@ export function Navbar() {
               className="group relative whitespace-nowrap text-fluid-sm font-medium text-paper/70 transition-colors hover:text-paper"
             >
               {t(item.labelKey)}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-clay transition-all duration-300 ease-swift group-hover:w-full" />
+              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-atlantic transition-all duration-300 ease-swift group-hover:w-full" />
             </a>
           ))}
         </nav>
 
         <div className="flex items-center gap-2.5">
+          <ThemeToggle className="hidden sm:grid" />
           <LanguageSwitcher />
           <Button to="/access" size="sm" variant="outline" icon={<Lock width={15} height={15} />} className="hidden sm:inline-flex">
             {t('nav.accessShort')}
@@ -64,7 +68,7 @@ export function Navbar() {
             {open ? <Close /> : <Menu />}
           </button>
         </div>
-      </motion.div>
+      </div>
 
       <div className={cn('shell pointer-events-none h-px transition-opacity duration-500', scrolled ? 'opacity-100' : 'opacity-0')}>
         <div className="h-px w-full bg-line" />
@@ -94,10 +98,11 @@ export function Navbar() {
                   {t(item.labelKey)}
                 </motion.a>
               ))}
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="pt-8">
-                <Button to="/access" size="lg" icon={<Lock />} className="w-full">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="flex items-center gap-3 pt-8">
+                <Button to="/access" size="lg" icon={<Lock />} className="flex-1">
                   {t('nav.access')}
                 </Button>
+                <ThemeToggle className="h-[3.25rem] w-[3.25rem] sm:hidden" />
               </motion.div>
             </nav>
           </motion.div>

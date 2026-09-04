@@ -2,35 +2,41 @@ import type { Config } from 'tailwindcss';
 
 /**
  * Catlantic design tokens.
- * Warm luxury dark: paper-white ink on near-black clay-tinted surfaces,
- * with a single clay accent and a restrained wheat-gold secondary.
+ *
+ * Every colour resolves through a CSS custom property (see src/styles/index.css)
+ * so the same utility classes render the dark theme by default and the light
+ * theme when <html data-theme="light"> is set. "ink" is always the surface
+ * scale and "paper" the foreground: in light mode the scale is simply flipped.
+ * Accent: Atlantic blue with a lighter celeste and a deeper marine step.
  */
+const v = (name: string): string => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
         ink: {
-          950: '#0B0A09',
-          900: '#100F0C',
-          850: '#17150F',
-          800: '#1D1B16',
-          700: '#26231C',
-          600: '#332F26',
+          950: v('ink-950'),
+          900: v('ink-900'),
+          850: v('ink-850'),
+          800: v('ink-800'),
+          700: v('ink-700'),
+          600: v('ink-600'),
         },
         line: {
-          DEFAULT: 'rgba(250,249,245,0.10)',
-          strong: 'rgba(250,249,245,0.18)',
+          DEFAULT: 'rgb(var(--c-paper) / 0.10)',
+          strong: 'rgb(var(--c-paper) / 0.18)',
         },
-        paper: '#FAF9F5',
-        muted: '#A9A296',
-        faint: '#6F6960',
-        clay: {
-          DEFAULT: '#D97757',
-          soft: '#E8A088',
-          deep: '#B4553A',
+        paper: v('paper'),
+        muted: v('muted'),
+        faint: v('faint'),
+        atlantic: {
+          DEFAULT: v('atlantic'),
+          soft: v('atlantic-soft'),
+          deep: v('atlantic-deep'),
         },
-        wheat: '#C9A961',
+        slate: v('slate'),
         series: {
           1: '#3987E5',
           2: '#D95926',

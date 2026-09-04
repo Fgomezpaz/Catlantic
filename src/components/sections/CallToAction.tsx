@@ -8,7 +8,7 @@ export function CallToAction() {
   const { t } = useI18n();
   return (
     <section id="contact" className="relative overflow-hidden border-t border-line bg-ink-950 py-28 lg:py-40">
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-[radial-gradient(ellipse_60%_80%_at_50%_100%,rgba(217,119,87,0.16),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-[radial-gradient(ellipse_60%_80%_at_50%_100%,rgb(var(--c-atlantic)/0.16),transparent_70%)]" />
       <div className="shell relative grid gap-12 lg:grid-cols-12 lg:items-end">
         <Reveal className="lg:col-span-8">
           <p className="eyebrow mb-6">{t('cta.eyebrow')}</p>

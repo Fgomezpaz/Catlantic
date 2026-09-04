@@ -5,7 +5,7 @@ import { ChartLine, Table as TableIcon } from '../icons/UiIcons';
 import { cn } from '../../lib/cn';
 import { useI18n } from '../../i18n/useI18n';
 
-/** Categorical slots validated for the dark surface (OKLab CVD ΔE ≥ 9). */
+/** Categorical slots validated on both ink and paper surfaces (OKLab CVD ΔE ≥ 9, ≥ 3:1 vs background). */
 const SERIES_COLORS = ['#3987E5', '#D95926', '#199E70'] as const;
 
 interface PriceChartProps {
@@ -92,16 +92,16 @@ export function PriceChart({ series, title, caption }: PriceChartProps) {
                   x2={W - PAD.right}
                   y1={model.y(v)}
                   y2={model.y(v)}
-                  stroke="rgba(250,249,245,0.08)"
+                  className="stroke-paper/[0.08]"
                   strokeWidth={1}
                 />
-                <text x={PAD.left - 8} y={model.y(v) + 3.5} textAnchor="end" fontSize={10} fill="#6F6960" fontFamily="JetBrains Mono, monospace">
+                <text x={PAD.left - 8} y={model.y(v) + 3.5} textAnchor="end" fontSize={10} className="fill-faint" fontFamily="JetBrains Mono, monospace">
                   {formatNumber(v, 0)}
                 </text>
               </g>
             ))}
             {model.labels.map((label, i) => (
-              <text key={label} x={model.x(i)} y={H - 8} textAnchor="middle" fontSize={10} fill="#6F6960" fontFamily="JetBrains Mono, monospace">
+              <text key={label} x={model.x(i)} y={H - 8} textAnchor="middle" fontSize={10} className="fill-faint" fontFamily="JetBrains Mono, monospace">
                 {label}
               </text>
             ))}
@@ -112,7 +112,7 @@ export function PriceChart({ series, title, caption }: PriceChartProps) {
                 x2={model.x(hover)}
                 y1={PAD.top}
                 y2={H - PAD.bottom}
-                stroke="rgba(250,249,245,0.28)"
+                className="stroke-paper/30"
                 strokeWidth={1}
                 strokeDasharray="3 3"
               />
@@ -124,12 +124,12 @@ export function PriceChart({ series, title, caption }: PriceChartProps) {
               return (
                 <g key={s.id}>
                   <path d={model.paths[si]} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-                  <circle cx={model.x(s.points.length - 1)} cy={model.y(last.v)} r={3.5} fill={color} stroke="#17150F" strokeWidth={2} />
+                  <circle cx={model.x(s.points.length - 1)} cy={model.y(last.v)} r={3.5} fill={color} className="stroke-ink-850" strokeWidth={2} />
                   <text
                     x={W - PAD.right + 12}
                     y={model.y(last.v) + 3.5}
                     fontSize={11}
-                    fill="#C7C1B5"
+                    className="fill-paper/80"
                     fontFamily="Inter, system-ui, sans-serif"
                   >
                     {tx(s.short)}
@@ -140,7 +140,7 @@ export function PriceChart({ series, title, caption }: PriceChartProps) {
                       cy={model.y(s.points[hover].v)}
                       r={4.5}
                       fill={color}
-                      stroke="#17150F"
+                      className="stroke-ink-850"
                       strokeWidth={2}
                     />
                   )}

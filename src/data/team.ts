@@ -20,7 +20,7 @@ export interface TeamMember {
 export const team: TeamMember[] = [
   {
     id: 'managing-partner',
-    name: 'Fernando Gómez',
+    name: 'Damián Rosenberg',
     role: l('Managing Partner', 'Socio Director', '管理合伙人'),
     focus: l('Strategy · Counterparties', 'Estrategia · Contrapartes', '战略 · 交易对手'),
     bio: l(
@@ -28,9 +28,9 @@ export const team: TeamMember[] = [
       'Lidera la mesa, las relaciones con contrapartes en Estados Unidos y China, y el programa de originación con productores y mineras de Sudamérica.',
       '领导交易台，负责美国与中国的交易对手关系，以及与南美种植户和矿业公司的货源计划。',
     ),
-    email: 'fernando@catlanticpartners.com',
+    email: 'damian@catlanticpartners.com',
     base: 'Sheridan · Buenos Aires',
-    initials: 'FG',
+    initials: 'DR',
   },
   {
     id: 'head-trading',

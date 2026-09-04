@@ -52,7 +52,7 @@ export default function Access() {
   return (
     <div className="relative min-h-screen bg-ink-950">
       <div className="hairline-grid pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,#000,transparent)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgba(217,119,87,0.12),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,rgb(var(--c-atlantic)/0.12),transparent_70%)]" />
 
       <header className="shell relative flex h-[4.5rem] items-center justify-between">
         <Link to="/" className="flex items-center gap-3 text-paper" aria-label="Catlantic">
@@ -86,15 +86,15 @@ export default function Access() {
                         setSide(s);
                         setStage('signin');
                       }}
-                      className="group flex min-h-[14rem] flex-col justify-between rounded-3xl border border-line bg-ink-900 p-7 text-left transition-colors hover:border-clay/50 hover:bg-ink-850"
+                      className="group flex min-h-[14rem] flex-col justify-between rounded-3xl border border-line bg-ink-900 p-7 text-left transition-colors hover:border-atlantic/50 hover:bg-ink-850"
                     >
-                      <span className="grid h-11 w-11 place-items-center rounded-full border border-line text-faint transition-colors group-hover:border-clay/50 group-hover:text-clay">
+                      <span className="grid h-11 w-11 place-items-center rounded-full border border-line text-faint transition-colors group-hover:border-atlantic/50 group-hover:text-atlantic">
                         <Lock width={17} height={17} />
                       </span>
                       <span>
                         <span className="display block text-fluid-xl">{t(s === 'client' ? 'acc.client' : 'acc.supplier')}</span>
                         <span className="mt-2 block text-pretty text-fluid-sm text-muted">{t(s === 'client' ? 'acc.clientBody' : 'acc.supplierBody')}</span>
-                        <span className="mt-5 inline-flex items-center gap-2 font-mono text-fluid-xs uppercase tracking-wider text-clay">
+                        <span className="mt-5 inline-flex items-center gap-2 font-mono text-fluid-xs uppercase tracking-wider text-atlantic">
                           {t('acc.continue')} <ArrowRight width={14} height={14} />
                         </span>
                       </span>
@@ -102,7 +102,7 @@ export default function Access() {
                   ))}
                 </div>
 
-                <p className="mt-10 max-w-2xl border-l-2 border-clay/40 pl-4 font-mono text-fluid-xs leading-relaxed text-faint">{t('acc.standard')}</p>
+                <p className="mt-10 max-w-2xl border-l-2 border-atlantic/40 pl-4 font-mono text-fluid-xs leading-relaxed text-faint">{t('acc.standard')}</p>
               </motion.section>
             )}
 
@@ -114,11 +114,11 @@ export default function Access() {
                 <form onSubmit={signIn} noValidate className="mt-8 max-w-md space-y-5">
                   <label className="block">
                     <span className="eyebrow">{t('acc.email')}</span>
-                    <input type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-clay" placeholder="you@company.com" required />
+                    <input type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-atlantic" placeholder="you@company.com" required />
                   </label>
                   <label className="block">
                     <span className="eyebrow">{t('acc.password')}</span>
-                    <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-clay" placeholder="••••••••••••" required />
+                    <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-2 h-12 w-full rounded-xl border border-line bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint focus:border-atlantic" placeholder="••••••••••••" required />
                   </label>
 
                   <AnimatePresence>
@@ -148,7 +148,7 @@ export default function Access() {
                     ← {t('acc.back')}
                   </button>
                   {side === 'client' && (
-                    <Link to="/dashboard" className="text-clay hover:text-clay-soft">
+                    <Link to="/dashboard" className="text-atlantic hover:text-atlantic-soft">
                       {t('acc.previewDashboard')} →
                     </Link>
                   )}
@@ -172,7 +172,7 @@ export default function Access() {
                         aria-pressed={selected}
                         className={cn(
                           'grid gap-4 rounded-2xl border p-6 text-left transition-colors lg:grid-cols-12',
-                          selected ? 'border-clay/60 bg-ink-900' : 'border-line bg-ink-900/40 hover:border-paper/30',
+                          selected ? 'border-atlantic/60 bg-ink-900' : 'border-line bg-ink-900/40 hover:border-paper/30',
                         )}
                       >
                         <div className="lg:col-span-5">

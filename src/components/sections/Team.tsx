@@ -27,16 +27,16 @@ export function Team() {
           {team.map((member) => (
             <motion.article key={member.id} variants={staggerItem} className="group relative flex min-h-[22rem] flex-col bg-ink-950 p-7 transition-colors duration-500 hover:bg-ink-900">
               <div className="flex items-start justify-between">
-                <span className="grid h-14 w-14 place-items-center rounded-full border border-line bg-ink-900 font-display text-fluid-base font-semibold tracking-tightest text-paper transition-colors group-hover:border-clay/50">
+                <span className="grid h-14 w-14 place-items-center rounded-full border border-line bg-ink-900 font-display text-fluid-base font-semibold tracking-tightest text-paper transition-colors group-hover:border-atlantic/50">
                   {member.initials}
                 </span>
                 <span className="font-mono text-fluid-xs text-faint">{member.base}</span>
               </div>
               <h3 className="display mt-8 text-fluid-xl">{member.name}</h3>
-              <p className="mt-1 text-fluid-sm font-medium text-clay">{tx(member.role)}</p>
+              <p className="mt-1 text-fluid-sm font-medium text-atlantic">{tx(member.role)}</p>
               <p className="mt-1 font-mono text-fluid-xs text-faint">{tx(member.focus)}</p>
               <p className="mt-5 text-pretty text-fluid-sm text-muted">{tx(member.bio)}</p>
-              <a href={`mailto:${member.email}`} className="mt-auto inline-flex items-center gap-2 pt-8 font-mono text-fluid-xs text-paper/80 transition-colors hover:text-clay">
+              <a href={`mailto:${member.email}`} className="mt-auto inline-flex items-center gap-2 pt-8 font-mono text-fluid-xs text-paper/80 transition-colors hover:text-atlantic">
                 {member.email}
                 <ArrowUpRight width={14} height={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>

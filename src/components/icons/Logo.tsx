@@ -12,8 +12,9 @@ interface LogoMarkProps {
  * with a single point of departure at the ring's opening.
  */
 export function LogoMark({ size = 32, className, monochrome = false }: LogoMarkProps) {
-  const seed = monochrome ? 'currentColor' : '#D97757';
   const dense = size < 28;
+  // Kernel colour follows the theme token (Atlantic blue), or the text colour when monochrome.
+  const seedClass = monochrome ? 'fill-current' : 'fill-atlantic';
 
   return (
     <svg
@@ -31,12 +32,12 @@ export function LogoMark({ size = 32, className, monochrome = false }: LogoMarkP
         strokeLinecap="round"
       />
       <g transform="rotate(-22 24 24)">
-        <path d="M24 10C31.5 15 31.5 33 24 38C16.5 33 16.5 15 24 10Z" fill={seed} />
+        <path d="M24 10C31.5 15 31.5 33 24 38C16.5 33 16.5 15 24 10Z" className={seedClass} />
         {!dense && (
-          <path d="M24 10C31.5 15 31.5 33 24 38" stroke="#100F0C" strokeWidth={1.6} strokeOpacity={0.9} />
+          <path d="M24 10C31.5 15 31.5 33 24 38" className="stroke-ink-900" strokeWidth={1.6} strokeOpacity={0.9} />
         )}
       </g>
-      <circle cx="42.4" cy="5.6" r={dense ? 3.6 : 3} fill={seed} />
+      <circle cx="42.4" cy="5.6" r={dense ? 3.6 : 3} className={seedClass} />
     </svg>
   );
 }

@@ -171,7 +171,7 @@ export function ApplicationWizard({ profile, onBack }: ApplicationWizardProps) {
               key={i}
               className={cn(
                 'h-1 flex-1 rounded-full transition-colors duration-500',
-                (phase === 'form' ? i <= stepIndex : true) ? 'bg-clay' : 'bg-ink-700',
+                (phase === 'form' ? i <= stepIndex : true) ? 'bg-atlantic' : 'bg-ink-700',
               )}
             />
           ))}
@@ -211,7 +211,7 @@ export function ApplicationWizard({ profile, onBack }: ApplicationWizardProps) {
             <h2 className="display text-fluid-xl">{t('acc.reviewTitle')}</h2>
             <p className="mt-3 max-w-2xl text-fluid-sm text-muted">{t('acc.reviewBody')}</p>
 
-            <button type="button" onClick={() => setShowSummary((v) => !v)} className="mt-6 font-mono text-fluid-xs text-clay hover:text-clay-soft">
+            <button type="button" onClick={() => setShowSummary((v) => !v)} className="mt-6 font-mono text-fluid-xs text-atlantic hover:text-atlantic-soft">
               {showSummary ? t('acc.summaryHide') : t('acc.summaryShow')}
             </button>
             {showSummary && (
@@ -235,7 +235,7 @@ export function ApplicationWizard({ profile, onBack }: ApplicationWizardProps) {
             <div className="mt-8 space-y-4">
               {(['accuracy', 'kyc', 'terms'] as const).map((k) => (
                 <label key={k} className="flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-ink-900 p-4 text-fluid-sm text-paper/85">
-                  <input type="checkbox" checked={declarations[k]} onChange={(e) => setDeclarations((d) => ({ ...d, [k]: e.target.checked }))} className="mt-1 h-4 w-4 shrink-0 accent-clay" />
+                  <input type="checkbox" checked={declarations[k]} onChange={(e) => setDeclarations((d) => ({ ...d, [k]: e.target.checked }))} className="mt-1 h-4 w-4 shrink-0 accent-atlantic" />
                   <span>{t(`acc.decl.${k}`, { company: company.name })}</span>
                 </label>
               ))}

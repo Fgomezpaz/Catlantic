@@ -52,11 +52,11 @@ export function TradeLanes() {
                       <div className="min-w-0">
                         <div className="flex items-center gap-3 text-fluid-base font-medium">
                           <span className="truncate">{lane.from.label}</span>
-                          <ArrowRight width={16} height={16} className={cn('shrink-0 transition-all duration-300', active ? 'translate-x-1 text-clay' : 'text-faint')} />
+                          <ArrowRight width={16} height={16} className={cn('shrink-0 transition-all duration-300', active ? 'translate-x-1 text-atlantic' : 'text-faint')} />
                           <span className="truncate">{lane.to.label}</span>
                         </div>
                         <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 font-mono text-fluid-xs text-faint">
-                          <span className={lane.direction === 'import' ? 'text-clay/80' : undefined}>{lane.direction === 'import' ? t('lanes.inbound') : lane.region}</span>
+                          <span className={lane.direction === 'import' ? 'text-atlantic/80' : undefined}>{lane.direction === 'import' ? t('lanes.inbound') : lane.region}</span>
                           <span>{lane.modes.map((m) => t(modeKey[m])).join(' · ')}</span>
                           <span>{t(cadenceKey[lane.cadence])}</span>
                         </div>
@@ -83,7 +83,7 @@ export function TradeLanes() {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="relative aspect-square w-full lg:col-span-7"
           >
-            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(217,119,87,0.14),transparent_62%)]" />
+            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgb(var(--c-atlantic)/0.14),transparent_62%)]" />
             <Suspense fallback={<div className="h-full w-full" />}>
               <GlobeCanvas lanes={lanes} activeId={activeId} className="absolute inset-0" />
             </Suspense>

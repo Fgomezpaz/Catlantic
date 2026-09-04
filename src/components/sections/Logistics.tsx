@@ -47,10 +47,10 @@ export function Logistics() {
                       onMouseEnter={() => setActiveId(service.id)}
                       className={cn(
                         'flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-colors duration-300',
-                        selected ? 'border-clay/50 bg-ink-950 text-paper' : 'border-line bg-transparent text-muted hover:border-paper/30 hover:text-paper',
+                        selected ? 'border-atlantic/50 bg-ink-950 text-paper' : 'border-line bg-transparent text-muted hover:border-paper/30 hover:text-paper',
                       )}
                     >
-                      <span className={cn('grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors', selected ? 'border-clay/50 text-clay' : 'border-line text-faint')}>
+                      <span className={cn('grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors', selected ? 'border-atlantic/50 text-atlantic' : 'border-line text-faint')}>
                         <Icon width={17} height={17} />
                       </span>
                       <span>
@@ -66,7 +66,7 @@ export function Logistics() {
 
           <Reveal delay={0.1} className="lg:col-span-8">
             <div className="relative flex min-h-[26rem] flex-col overflow-hidden rounded-2xl border border-line bg-ink-950 p-8 lg:p-12">
-              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(217,119,87,0.18),transparent_65%)]" />
+              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgb(var(--c-atlantic)/0.18),transparent_65%)]" />
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active.id}
@@ -82,7 +82,7 @@ export function Logistics() {
                   <ul className="mt-10 grid gap-3 sm:grid-cols-2">
                     {active.scope.map((item) => (
                       <li key={item.en} className="flex items-center gap-3 text-fluid-sm text-paper/85">
-                        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-clay/40 text-clay">
+                        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-atlantic/40 text-atlantic">
                           <Check width={12} height={12} />
                         </span>
                         {tx(item)}

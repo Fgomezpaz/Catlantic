@@ -12,7 +12,7 @@ interface FieldControlProps {
 }
 
 const inputClass =
-  'h-12 w-full rounded-xl border bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint transition-colors focus:border-clay';
+  'h-12 w-full rounded-xl border bg-ink-900 px-4 text-fluid-sm text-paper placeholder:text-faint transition-colors focus:border-atlantic';
 
 export function FieldControl({ field, value, error, onChange }: FieldControlProps) {
   const { t, tx } = useI18n();
@@ -23,7 +23,7 @@ export function FieldControl({ field, value, error, onChange }: FieldControlProp
     <label htmlFor={id} className="mb-2 flex items-baseline justify-between gap-3">
       <span className="text-fluid-sm text-paper/90">
         {tx(field.label)}
-        {field.required && <span className="ml-1 text-clay">*</span>}
+        {field.required && <span className="ml-1 text-atlantic">*</span>}
       </span>
       {!field.required && <span className="font-mono text-[0.62rem] uppercase tracking-wider text-faint">{t('acc.optional')}</span>}
     </label>
@@ -113,7 +113,7 @@ export function FieldControl({ field, value, error, onChange }: FieldControlProp
     case 'checkbox':
       control = (
         <label className="flex cursor-pointer items-start gap-3 text-fluid-sm text-paper/85">
-          <input id={id} type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-clay" />
+          <input id={id} type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-atlantic" />
           <span>{tx(field.label)}</span>
         </label>
       );

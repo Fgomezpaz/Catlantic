@@ -5,7 +5,6 @@ export const company = {
   shortName: 'Catlantic',
   legalSuffix: 'LLC',
   founded: 2024,
-  phone: '+1 (385) 219-7700',
   website: 'www.catlanticpartners.com',
   address: {
     line1: '30 North Gould Street, Ste R',

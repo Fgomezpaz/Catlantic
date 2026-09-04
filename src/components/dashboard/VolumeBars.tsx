@@ -51,7 +51,7 @@ export function VolumeBars({ slices, title, caption }: VolumeBarsProps) {
                 <div
                   className={cn(
                     'h-full rounded-r-[4px] transition-[width,background-color] duration-700 ease-swift',
-                    slice.emphasis ? 'bg-clay' : active ? 'bg-paper/55' : 'bg-paper/25',
+                    slice.emphasis ? 'bg-atlantic' : active ? 'bg-paper/55' : 'bg-paper/25',
                   )}
                   style={{ width: `${Math.max(pct * 100, 1.5)}%` }}
                 />
